@@ -1,7 +1,9 @@
 import "./App.css";
 import Messages from "./components/Messages/Messages";
+import Input from "./components/Input/Input";
+import { useState } from "react";
 
-const messages = [
+const msgs = [
   {
     member: {
       clientData: {
@@ -34,14 +36,34 @@ const messages = [
   },
 ];
 
-const currentMember = {
+const cm = {
   id: 1,
 };
 
 function App() {
+  const [messages, setMessages] = useState(msgs);
+  const [currentMember, setCurrentMember] = useState(cm);
+
+  const onSendChange = (messageText) => {
+    setMessages((old) => {
+      const user = {
+        member: {
+          clientData: {
+            color: "red",
+            username: "Marko",
+          },
+          id: 1,
+        },
+        text: messageText,
+      };
+      return [...old, user];
+    });
+  };
+
   return (
     <>
       <Messages messages={messages} currentMember={currentMember} />
+      <Input onSendChange={onSendChange} />
     </>
   );
 }
