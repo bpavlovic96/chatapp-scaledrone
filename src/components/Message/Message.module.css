@@ -1,0 +1,47 @@
+.messageContent {
+  display: inline-block;
+}
+
+.text {
+  padding: 10px;
+  max-width: 400px;
+  margin: 0;
+  border-radius: 12px;
+  background-color: cornflowerblue;
+  color: white;
+  display: inline-block;
+}
+
+.currentMember > .text {
+  background-color: orangered;
+}
+
+.username {
+  display: block;
+  color: gray;
+  font-size: 14px;
+  padding-bottom: 4px;
+}
+
+.avatar {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 0 10px -10px;
+}
+
+.messagesMessage {
+  display: flex;
+  margin-top: 10px;
+}
+
+.currentMember {
+  /*justify-content: flex-end;*/
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+.currentMember > .messageContent {
+  align-items: flex-end;
+}

@@ -2,20 +2,20 @@ import styles from "./Message.module.css";
 
 function Message({ message, currentMember }) {
   const { member, text } = message;
-  const messageFromMe = member.id === currentMember.id;
+  const messageFromMe = member?.id === currentMember;
   const className = messageFromMe
-    ? "Messages-message currentMember"
-    : "Messages-message";
+    ? `${styles.currentMember} ${styles.messagesMessage}`
+    : `${styles.messagesMessage}`;
 
   return (
     <li className={className}>
       <span
-        className="avatar"
+        className={styles.avatar}
         style={{ backgroundColor: member.clientData.color }}
       />
-      <div className="Message-content">
-        <div className="username">{member.clientData.username}</div>
-        <div className="text">{text}</div>
+      <div className={styles.messageContent}>
+        <div className={styles.username}>{member.clientData.username}</div>
+        <div className={styles.text}>{text}</div>
       </div>
     </li>
   );

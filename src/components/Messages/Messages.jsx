@@ -3,9 +3,9 @@ import Message from "../Message/Message";
 
 function Messages({ messages, currentMember }) {
   return (
-    <ul className="Messages-list">
+    <ul className={styles.list}>
       {messages?.map((m) => (
-        <Message message={m} currentMember={currentMember} key={m.id} />
+        <Message message={m} currentMember={currentMember} key={m.uuid} />
       ))}
     </ul>
   );

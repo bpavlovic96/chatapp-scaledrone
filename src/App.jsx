@@ -1,62 +1,51 @@
 import "./App.css";
 import Messages from "./components/Messages/Messages";
 import Input from "./components/Input/Input";
-import { useState } from "react";
-
-const msgs = [
-  {
-    member: {
-      clientData: {
-        color: "red",
-        username: "Marko",
-      },
-      id: 1,
-    },
-    text: "Lorem",
-  },
-  {
-    member: {
-      clientData: {
-        color: "blue",
-        username: "Ivan",
-      },
-      id: 2,
-    },
-    text: "Ipsum",
-  },
-  {
-    member: {
-      clientData: {
-        color: "green",
-        username: "Josip",
-      },
-      id: 3,
-    },
-    text: "Dorem",
-  },
-];
-
-const cm = {
-  id: 1,
-};
+import { useState, useEffect } from "react";
+import { randomColor, randomName } from "./random";
+import { v4 as uuidv4 } from "uuid";
 
 function App() {
-  const [messages, setMessages] = useState(msgs);
-  const [currentMember, setCurrentMember] = useState(cm);
+  const channelID = import.meta.env.VITE_CHANNEL_ID;
+  const [drone, setDrone] = useState(null);
+
+  const [messages, setMessages] = useState([]);
+  const [currentMember, setCurrentMember] = useState();
+
+  useEffect(() => {
+    const scaledrone = new window.Scaledrone(channelID, {
+      data: { name: randomName(), color: randomColor() },
+    });
+    setDrone(scaledrone);
+  }, [channelID]);
+
+  useEffect(() => {
+    if (drone) {
+      drone.on("open", (error) => {
+        if (error) {
+          return console.error(error);
+        }
+        setCurrentMember(drone.clientId);
+      });
+      const room = drone.subscribe("observable-room");
+      room.on("data", (data, member) => {
+        setMessages((old) => {
+          const msgs = [...old];
+          msgs.push({
+            text: data,
+            member,
+            uuid: uuidv4(),
+          });
+          return msgs;
+        });
+      });
+    }
+  }, [drone]);
 
   const onSendChange = (messageText) => {
-    setMessages((old) => {
-      const user = {
-        member: {
-          clientData: {
-            color: "red",
-            username: "Marko",
-          },
-          id: 1,
-        },
-        text: messageText,
-      };
-      return [...old, user];
+    drone.publish({
+      room: "observable-room",
+      message: messageText,
     });
   };
 
