@@ -2,8 +2,9 @@ import "./App.css";
 import Messages from "./components/Messages/Messages";
 import Input from "./components/Input/Input";
 import { useState, useEffect } from "react";
-import { randomColor, randomName } from "./random";
+import { randomColor } from "./random";
 import { v4 as uuidv4 } from "uuid";
+import Modal from "./components/Modal/Modal";
 
 function App() {
   const channelID = import.meta.env.VITE_CHANNEL_ID;
@@ -11,13 +12,19 @@ function App() {
 
   const [messages, setMessages] = useState([]);
   const [currentMember, setCurrentMember] = useState();
+  const [modalIsOpen, setModalIsOpen] = useState(true);
+  const [inputValue, setInputValue] = useState("");
+  const [name, setName] = useState("");
 
   useEffect(() => {
     const scaledrone = new window.Scaledrone(channelID, {
-      data: { name: randomName(), color: randomColor() },
+      data: { name: name, color: randomColor() },
     });
     setDrone(scaledrone);
-  }, [channelID]);
+    return () => {
+      scaledrone.close();
+    };
+  }, [channelID, name]);
 
   useEffect(() => {
     if (drone) {
@@ -50,10 +57,25 @@ function App() {
   };
 
   return (
-    <>
-      <Messages messages={messages} currentMember={currentMember} />
-      <Input onSendChange={onSendChange} />
-    </>
+    <div className="app">
+      <div className="chat-container-outer">
+        <div className="chat-container">
+          <Messages
+            messages={messages}
+            currentMember={currentMember}
+            name={name}
+          />
+          <Input onSendChange={onSendChange} />
+        </div>
+      </div>
+      <Modal
+        modalIsOpen={modalIsOpen}
+        setModalIsOpen={setModalIsOpen}
+        setName={setName}
+        inputValue={inputValue}
+        setInputValue={setInputValue}
+      />
+    </div>
   );
 }
 

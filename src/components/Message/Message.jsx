@@ -1,6 +1,6 @@
 import styles from "./Message.module.css";
 
-function Message({ message, currentMember }) {
+function Message({ message, currentMember, name }) {
   const { member, text } = message;
   const messageFromMe = member?.id === currentMember;
   const className = messageFromMe
@@ -9,13 +9,22 @@ function Message({ message, currentMember }) {
 
   return (
     <li className={className}>
-      <span
-        className={styles.avatar}
-        style={{ backgroundColor: member.clientData.color }}
-      />
+      <div className={styles.avatarWrapper}>
+        <span className={styles.username}>
+          {messageFromMe ? name : member.clientData.name}
+        </span>
+        <span
+          className={styles.avatar}
+          style={{ backgroundColor: member.clientData.color }}
+        />
+      </div>
       <div className={styles.messageContent}>
-        <div className={styles.username}>{member.clientData.username}</div>
-        <div className={styles.text}>{text}</div>
+        <div
+          className={styles.text}
+          style={{ backgroundColor: member.clientData.color }}
+        >
+          {text}
+        </div>
       </div>
     </li>
   );

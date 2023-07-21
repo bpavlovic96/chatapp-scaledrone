@@ -5,7 +5,6 @@ function Input({ onSendChange }) {
   const [value, setValue] = useState("");
 
   const onChange = (e) => {
-    console.log(e);
     setValue(e.target.value);
   };
 
@@ -24,13 +23,13 @@ function Input({ onSendChange }) {
   };
 
   return (
-    <div>
+    <div className={styles.inputContainer}>
       <input
         className={styles.input}
         onChange={onChange}
         onKeyDown={onKeyDown}
         value={value}
-        placeholder="Enter your message"
+        placeholder="Enter your message..."
         type="text"
       />
       <button className={styles.button} onClick={onButtonPress}>

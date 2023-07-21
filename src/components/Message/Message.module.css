@@ -4,23 +4,17 @@
 
 .text {
   padding: 10px;
-  max-width: 400px;
-  margin: 0;
+  margin-top: 10px;
   border-radius: 12px;
-  background-color: cornflowerblue;
   color: white;
   display: inline-block;
-}
-
-.currentMember > .text {
-  background-color: orangered;
+  word-break: break-word;
 }
 
 .username {
   display: block;
   color: gray;
   font-size: 14px;
-  padding-bottom: 4px;
 }
 
 .avatar {
@@ -28,20 +22,42 @@
   width: 35px;
   border-radius: 50%;
   display: inline-block;
-  margin: 0 10px -10px;
+  margin: 0 0 0 0;
+  flex-shrink: 0;
 }
 
 .messagesMessage {
-  display: flex;
   margin-top: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
-.currentMember {
-  /*justify-content: flex-end;*/
-  flex-direction: row-reverse;
-  text-align: right;
+.currentMember .username {
+  order: 0 !important;
 }
 
 .currentMember > .messageContent {
   align-items: flex-end;
+}
+
+.currentMember .username {
+  text-align: right;
+}
+
+.avatarWrapper {
+  display: flex;
+  gap: 10px;
+}
+
+.avatarWrapper .username {
+  order: 1;
+  align-self: center;
+}
+
+.currentMember .avatarWrapper {
+  align-self: flex-end;
+}
+
+.currentMember .messageContent {
+  align-self: flex-end;
 }

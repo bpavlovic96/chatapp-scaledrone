@@ -1,17 +1,29 @@
 .input {
   padding: 5px;
   font-size: 16px;
-  border-radius: 8px;
-  border: 1px solid orangered;
+  border-radius: 10px;
+  border: 2px solid rgba(58, 91, 131, 0.5);
+  box-shadow: 0 0 0.5rem 0.5rem rgba(120, 120, 120, 0.1);
   flex-grow: 1;
+  width: 80%;
+  margin-right: 1rem;
 }
 
 .button {
   padding: 5px 10px;
   font-size: 16px;
-  background-color: orangered;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  margin-left: 10px;
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  border: 2px solid rgba(58, 91, 131, 0.5);
+  box-shadow: 0 0 0.5rem 0.5rem rgba(120, 120, 120, 0.1);
+  border-radius: 10px;
+  width: 15%;
+  cursor: pointer;
+  min-width: 80px;
+}
+
+.inputContainer {
+  display: flex;
+  flex-wrap: nowrap;
+  padding: 11px;
 }
