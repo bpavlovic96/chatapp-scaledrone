@@ -20,19 +20,18 @@ function App() {
     const scaledrone = new window.Scaledrone(channelID, {
       data: { name: name, color: randomColor() },
     });
+
     setDrone(scaledrone);
-    return () => {
-      scaledrone.close();
-    };
   }, [channelID, name]);
 
   useEffect(() => {
     if (drone) {
       drone.on("open", (error) => {
         if (error) {
-          return console.error(error);
+          console.error(error);
+        } else {
+          setCurrentMember(drone.clientId);
         }
-        setCurrentMember(drone.clientId);
       });
       const room = drone.subscribe("observable-room");
       room.on("data", (data, member) => {
@@ -47,6 +46,11 @@ function App() {
         });
       });
     }
+    return () => {
+      if (drone) {
+        drone.close();
+      }
+    };
   }, [drone]);
 
   const onSendChange = (messageText) => {
